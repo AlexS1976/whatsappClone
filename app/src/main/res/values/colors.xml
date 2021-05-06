@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="WhatsApp_background">#234242</color>
+    <color name="WhatsApp_secundary">#274C4C</color>
+
 </resources>
