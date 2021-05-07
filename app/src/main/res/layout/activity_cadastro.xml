@@ -10,12 +10,13 @@
     tools:context=".activity.CadastroActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewFoto"
         android:layout_width="194dp"
         android:layout_height="171dp"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
+        android:contentDescription="@string/texto_imagem"
         app:srcCompat="@drawable/usuario" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -23,6 +24,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editNome"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:background="@drawable/button_style"
@@ -35,6 +37,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editEmail"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginTop="16dp"
@@ -48,6 +51,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editSenha"
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
                     android:layout_marginTop="16dp"
@@ -57,12 +61,13 @@
                     android:padding="8dp" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/buttonCadastrar"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="32dp"
                     android:background="@drawable/button_style"
+                    android:onClick="validarCadastrarUsuario"
                     android:text="@string/texto_botao"
                     android:textColor="@color/WhatsApp_background" />
             </com.google.android.material.textfield.TextInputLayout>
