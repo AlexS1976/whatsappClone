@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/WhatsApp_background"
+    android:background="@color/WhatsApp_secundary"
     android:orientation="vertical"
     android:padding="28dp"
     tools:context=".activity.LoginActivity">
@@ -28,11 +28,13 @@
         tools:layout_editor_absoluteY="371dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTextEmail"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_gravity="center"
             android:background="@drawable/button_style"
-            android:hint="email"
+            android:hint="@string/digite_email"
+            android:inputType="textEmailAddress"
             android:padding="8dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,34 +45,37 @@
         tools:layout_editor_absoluteY="488dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTextSenha"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:background="@drawable/button_style"
-            android:hint="Senha"
+            android:hint="@string/digite_senha"
+            android:inputType="textPassword"
             android:padding="8dp"
             tools:layout_editor_absoluteX="2dp"
             tools:layout_editor_absoluteY="456dp" />
 
         <Button
+            android:id="@+id/buttonEnviar"
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginTop="32dp"
 
+            android:layout_marginTop="32dp"
             android:background="@drawable/button_style"
-            android:text="Enviar"
+            android:text="@string/texto_botao"
             android:textColor="@color/WhatsApp_background" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textCadastro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Se você ainda não é cadastrado clique aqui."
+        android:text="Não tem conta? Cadastre-se"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>

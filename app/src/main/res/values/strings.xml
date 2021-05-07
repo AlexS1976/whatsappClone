@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WhatsAppClone</string>
+    <string name="digite_nome">Digite seu nome</string>
+    <string name="digite_email">Digite seu email</string>
+    <string name="digite_senha">Digite sua senha</string>
+    <string name="texto_botao">Enviar</string>
+
+
 </resources>
