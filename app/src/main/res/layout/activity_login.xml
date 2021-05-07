@@ -65,6 +65,7 @@
 
             android:layout_marginTop="32dp"
             android:background="@drawable/button_style"
+            android:onClick="validarCadastrarUsuario"
             android:text="@string/texto_botao"
             android:textColor="@color/WhatsApp_background" />
     </com.google.android.material.textfield.TextInputLayout>

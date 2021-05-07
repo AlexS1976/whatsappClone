@@ -55,6 +55,8 @@ public class CadastroActivity extends AppCompatActivity {
                 String excecao = "";
                 if (task.isSuccessful()){
                     Toast.makeText(CadastroActivity.this, "Cdastro realizado com sucesso", Toast.LENGTH_SHORT).show();
+                    finish();
+
                 }else {
                     try {
                         throw task.getException();
