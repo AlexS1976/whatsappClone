@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         botaoEnviar = findViewById(R.id.buttonEnviar);
         textoCadastro = findViewById(R.id.textCadastro);
 
+        autenticacao = ConfiguracaoFirebase.getAuth();
+
         textoCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logarUsuario (Usuario usuario){
 
-        autenticacao = ConfiguracaoFirebase.getAuth();
+
         autenticacao.signInWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -113,6 +116,15 @@ public class LoginActivity extends AppCompatActivity {
             }
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
+        if (usuarioAtual != null){
+            abrirTelaPrincipal();
+        }
     }
 
     public void abrirTelaPrincipal(){

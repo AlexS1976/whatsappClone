@@ -14,4 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:button">?attr/colorOnPrimary</item>
     </style>
+    <style name="Toolbar" parent="Theme.AppCompat.NoActionBar">
+
+    </style>
 </resources>
