@@ -8,6 +8,8 @@
     <string name="text_menu_pesquisa">Pesquisar</string>
     <string name="text_menu_configuracoes">Configurações</string>
     <string name="text_menu_sair">Sair</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
