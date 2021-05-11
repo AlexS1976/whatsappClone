@@ -29,12 +29,13 @@
         android:paddingRight="6dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textUserName"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:hint="@string/digite_nome" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageNameChange"
             android:layout_width="97dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
