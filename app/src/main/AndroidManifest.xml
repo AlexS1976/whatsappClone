@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.whatsappclone">
 
+    //define que o aparelho do usuario deve ter os recursos necessarios para usar o app
+
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true"
+        />
+
     //pedido de permissao necessario para acessar as fotos do dispositivo
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"

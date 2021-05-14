@@ -9,6 +9,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private String UrlImagemPerfil;
 
     public Usuario() {
     }
@@ -52,4 +53,13 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getUrlImagemPerfil() {
+        return UrlImagemPerfil;
+    }
+
+    public void setUrlImagemPerfil(String urlImagemPerfil) {
+        UrlImagemPerfil = urlImagemPerfil;
+    }
 }
+
