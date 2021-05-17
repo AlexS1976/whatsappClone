@@ -11,27 +11,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.whatsappclone.R;
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
-import com.example.whatsappclone.helper.Base64Custom;
 import com.example.whatsappclone.helper.Permissoes;
 import com.example.whatsappclone.helper.UsuarioFirebase;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.circularreveal.cardview.CircularRevealCardView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.storage.FirebaseStorage;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
@@ -39,12 +38,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ConfiguracoesActivity extends AppCompatActivity {
 
-    private ImageView fotoUsuario;
+    private CircleImageView fotoUsuario;
     private static final int SELECAO_CAMERA = 100;
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
     private String identificadorUsuario;
     private  Bitmap imagem =null;
+    private TextInputEditText nomePerfilUsuario;
 
 
     private String[] permissoesNecessarias = new String[]{
@@ -57,12 +57,39 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
 
-        fotoUsuario = findViewById(R.id.imageViewFoto);
+        fotoUsuario = findViewById(R.id.fotoPerfil);
+        nomePerfilUsuario = findViewById(R.id.textUserName);
 
         Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
         toolbar.setTitle("Configurações");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Recuperar dados do usuario
+
+        FirebaseUser usuario = UsuarioFirebase.getUsuarioAtual();
+        Uri url = usuario.getPhotoUrl();
+
+            if (url != null){
+                        Glide.with(ConfiguracoesActivity.this)
+                        .load(url)
+                        .into(fotoUsuario);
+
+            }else{
+                fotoUsuario.setImageResource(R.drawable.padrao);
+
+            }
+
+            nomePerfilUsuario.setText(usuario.getDisplayName());
+
+
+
+
+
+
+
+
+
 
 
         //configuracoes usuario
@@ -179,7 +206,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             }
         });
 
-        builder.setNeutralButton("Calcelar", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -199,7 +226,7 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
 
         //salvar imagem firebase
-        StorageReference imagemRef = storageReference
+        final StorageReference imagemRef = storageReference
                 .child("imagens")
                 .child("perfil")
                 .child(identificadorUsuario + "perfil.jpeg");
@@ -214,10 +241,24 @@ public class ConfiguracoesActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getApplicationContext(),"SUCESSO",Toast.LENGTH_LONG).show();
-                //Picasso.get().load("gs://whatsapp-clone-58a1a.appspot.com/imagens/perfil/YWxleEBlbWFpbC5jb20=/perfil.jpeg").into(fotoUsuario);
+                //recuperar a url da imagem
+                imagemRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        Uri url = task.getResult();
+                        atualizarFotoUsuario( url );
+                    }
+                });
 
 
             }
         });
     }
+
+    public void atualizarFotoUsuario(Uri url){
+        UsuarioFirebase.atualizarFotoUsuario(url);
+
+    }
+
+
 }
