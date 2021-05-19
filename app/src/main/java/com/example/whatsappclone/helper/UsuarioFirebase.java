@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
+import com.example.whatsappclone.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,6 +82,22 @@ public class UsuarioFirebase {
 
 
 
+    }
+
+    public static Usuario getDadosUsuario(){
+        FirebaseUser firebaseUser = getUsuarioAtual();
+        Usuario usuario = new Usuario();
+        usuario.setEmail(firebaseUser.getEmail());
+        usuario.setNome(firebaseUser.getDisplayName());
+
+        if (firebaseUser.getPhotoUrl() == null){
+            usuario.setFoto("");
+
+        }else{
+            usuario.setFoto(firebaseUser.getPhotoUrl().toString());
+        }
+
+        return usuario;
     }
 
 

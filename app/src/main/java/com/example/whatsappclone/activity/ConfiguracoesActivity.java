@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ import com.example.whatsappclone.R;
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
 import com.example.whatsappclone.helper.Permissoes;
 import com.example.whatsappclone.helper.UsuarioFirebase;
+import com.example.whatsappclone.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,6 +47,9 @@ public class ConfiguracoesActivity extends AppCompatActivity {
     private String identificadorUsuario;
     private  Bitmap imagem =null;
     private TextInputEditText nomePerfilUsuario;
+    private ImageView atualizarNomreUsuario;
+    private Usuario usuarioLogado;
+
 
 
     private String[] permissoesNecessarias = new String[]{
@@ -57,12 +62,23 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
 
+        //configuracoes iniciais
+        storageReference = ConfiguracaoFirebase.getSoregeReference();
+        identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        usuarioLogado = UsuarioFirebase.getDadosUsuario();
+
+        //validar permissoes
+        Permissoes.validaPermissoes(permissoesNecessarias, this, 1);
+
+        // configuracoes componentes
         fotoUsuario = findViewById(R.id.fotoPerfil);
         nomePerfilUsuario = findViewById(R.id.textUserName);
+        atualizarNomreUsuario = findViewById(R.id.imageNameChange);
 
         Toolbar toolbar = findViewById(R.id.toolbarPrincipal);
         toolbar.setTitle("Configurações");
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Recuperar dados do usuario
@@ -82,23 +98,6 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
             nomePerfilUsuario.setText(usuario.getDisplayName());
 
-
-
-
-
-
-
-
-
-
-
-        //configuracoes usuario
-        storageReference = ConfiguracaoFirebase.getSoregeReference();
-        identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
-
-        //validar permissoes
-
-        Permissoes.validaPermissoes(permissoesNecessarias, this, 1);
     }
 
     @Override
@@ -257,6 +256,25 @@ public class ConfiguracoesActivity extends AppCompatActivity {
 
     public void atualizarFotoUsuario(Uri url){
         UsuarioFirebase.atualizarFotoUsuario(url);
+
+    }
+
+    public void atualizarNomeUsuario(View view){
+
+
+                String nome = nomePerfilUsuario.getText().toString();
+                boolean retorno = UsuarioFirebase.atualizarNomeUsuario(nome);
+
+                if (retorno){
+
+                    usuarioLogado.setNome(nome);
+                    usuarioLogado.atualizar();
+                    Toast.makeText(ConfiguracoesActivity.this,
+                            "Nome atualizado com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+
 
     }
 
