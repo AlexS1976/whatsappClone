@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -73,26 +74,25 @@ private FirebaseUser usuarioAtual;
         recyclerViewListaContatos.setAdapter(adapter);
 
         //configurar evento de click
-        recyclerViewListaContatos.addOnItemTouchListener(new RecyclerItemClickListener(
-                getActivity(), recyclerViewListaContatos, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        recyclerViewListaContatos.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), recyclerViewListaContatos, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        startActivity(intent);
+                    }
 
+                    @Override
+                    public void onLongItemClick(View view, int position) {
 
-            }
+                    }
 
-            @Override
-            public void onItemClick(View view, int position) {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            }
+                    }
+                }));
 
-            @Override
-            public void onLongItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                startActivity(intent);
-
-            }
-        }));
 
 
 

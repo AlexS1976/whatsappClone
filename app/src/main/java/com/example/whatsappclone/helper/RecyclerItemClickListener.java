@@ -1,13 +1,10 @@
 package com.example.whatsappclone.helper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -15,12 +12,6 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     private OnItemClickListener mListener;
     GestureDetector mGestureDetector;
-
-    public RecyclerItemClickListener(Activity activity, RecyclerView recyclerViewListaContatos, OnItemClickListener onItemClickListener) {
-    }
-
-    /*public RecyclerItemClickListener(FragmentActivity activity, RecyclerView recyclerViewListaContatos, OnItemClickListener onItemClickListener) {
-    }*/
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -48,7 +39,7 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         public void onLongItemClick(View view, int position);
     }
 
-    public void ClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
+    public RecyclerItemClickListener(Context context, final RecyclerView recyclerView, OnItemClickListener listener) {
         mListener = listener;
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -67,4 +58,3 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
 
     }
 }
-
