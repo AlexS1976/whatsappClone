@@ -2,19 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.whatsappclone">
 
-    //define que o aparelho do usuario deve ter os recursos necessarios para usar o app
-
     <uses-feature
         android:name="android.hardware.camera2"
-        android:required="true"
-        />
+        android:required="true" />
 
-    //pedido de permissao necessario para acessar as fotos do dispositivo
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        />
-    <uses-permission
-        android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -24,8 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsAppClone">
         <activity
+            android:name=".activity.ChatActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/Theme.WhatsAppClone.NoActionBar"></activity>
+        <activity
             android:name=".activity.ConfiguracoesActivity"
-            android:parentActivityName=".activity.MainActivity"></activity>
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.CadastroActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.LoginActivity">

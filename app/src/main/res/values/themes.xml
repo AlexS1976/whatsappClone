@@ -14,7 +14,17 @@
         <!-- Customize your theme here. -->
         <item name="android:button">?attr/colorOnPrimary</item>
     </style>
+
     <style name="Toolbar" parent="Theme.AppCompat.NoActionBar">
 
     </style>
+
+    <style name="Theme.WhatsAppClone.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.WhatsAppClone.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.WhatsAppClone.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
