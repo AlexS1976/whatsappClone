@@ -78,7 +78,9 @@ private FirebaseUser usuarioAtual;
                 new RecyclerItemClickListener(getActivity(), recyclerViewListaContatos, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        Usuario usuarioSelecionado = listaContatos.get(position);
                         Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        intent.putExtra("contato", usuarioSelecionado );
                         startActivity(intent);
                     }
 

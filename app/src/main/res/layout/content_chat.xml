@@ -9,6 +9,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
@@ -16,7 +17,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
@@ -37,7 +37,7 @@
             android:paddingRight="16dp">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/editTextMensagensChat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -46,7 +46,7 @@
                 android:inputType="textLongMessage" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewCameraChat"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_baseline_photo_camera_24" />
@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/ActionButtonEnviarChat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
