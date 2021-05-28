@@ -93,9 +93,6 @@ private FirebaseUser usuarioAtual;
                     }
                 }));
 
-
-
-
         return view;
     }
 
