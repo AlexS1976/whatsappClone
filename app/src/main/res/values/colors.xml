@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="WhatsApp_background">#234242</color>
     <color name="WhatsApp_secundary">#274C4C</color>
+    <color name="background_balao_remetente">#dbf9c4</color>
 
 </resources>

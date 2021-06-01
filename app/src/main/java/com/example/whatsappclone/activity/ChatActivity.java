@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.TextView;
@@ -13,12 +15,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.whatsappclone.R;
+import com.example.whatsappclone.adapter.MensagensAdapter;
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
 import com.example.whatsappclone.helper.Base64Custom;
 import com.example.whatsappclone.helper.UsuarioFirebase;
 import com.example.whatsappclone.model.Mensagem;
 import com.example.whatsappclone.model.Usuario;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,6 +34,9 @@ public class ChatActivity extends AppCompatActivity {
     private CircleImageView circleImageViewFoto;
     private Usuario usuarioDestinatario;
     private TextView mensagemChat;
+    private RecyclerView recyclerMensagens;
+    private MensagensAdapter mensagensAdapter;
+    private List<Mensagem> mensagens = new ArrayList<>();
 
     //identificador usuarios remetente e destinatario
     private String idUsuario;
@@ -51,6 +60,8 @@ public class ChatActivity extends AppCompatActivity {
         textViewNome = findViewById(R.id.textViewNomeUsuarioChat);
         circleImageViewFoto = findViewById(R.id.circleImagemFotoChat);
         mensagemChat = findViewById(R.id.editTextMensagensChat);
+        recyclerMensagens = findViewById(R.id.recyclerViewChat);
+
 
         //recuperar dados do usuario remetente
         idUsuario = UsuarioFirebase.getIdentificadorUsuario();
@@ -73,11 +84,23 @@ public class ChatActivity extends AppCompatActivity {
             }else{
                 circleImageViewFoto.setImageResource(R.drawable.padrao);
             }
-
+            //recuperar dados do usuario destinatario
+            idUsuarioDestinatario = Base64Custom.codificarBase64(usuarioDestinatario.getEmail());
         }
 
-        //recuperar dados do usuario destinatario
-        idUsuarioDestinatario = Base64Custom.codificarBase64(usuarioDestinatario.getEmail());
+
+        //configuracao recyclerview
+
+        // configuracao adapter
+        mensagensAdapter = new MensagensAdapter(mensagens, getApplicationContext());
+
+
+        // configuracao recyclerview
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerMensagens.setLayoutManager(layoutManager);
+        recyclerMensagens.setHasFixedSize(true);
+        recyclerMensagens.setAdapter(mensagensAdapter);
 
 
 
