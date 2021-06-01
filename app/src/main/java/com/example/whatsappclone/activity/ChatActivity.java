@@ -3,6 +3,8 @@ package com.example.whatsappclone.activity;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,9 @@ import com.example.whatsappclone.helper.Base64Custom;
 import com.example.whatsappclone.helper.UsuarioFirebase;
 import com.example.whatsappclone.model.Mensagem;
 import com.example.whatsappclone.model.Usuario;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -37,9 +43,13 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerMensagens;
     private MensagensAdapter mensagensAdapter;
     private List<Mensagem> mensagens = new ArrayList<>();
+    private ChildEventListener childEventListenerMensagens;
+
+    private  DatabaseReference database;
+    private DatabaseReference mensagensRef;
 
     //identificador usuarios remetente e destinatario
-    private String idUsuario;
+    private String idUsuarioRemetente;
     private  String idUsuarioDestinatario;
 
     @Override
@@ -64,7 +74,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
         //recuperar dados do usuario remetente
-        idUsuario = UsuarioFirebase.getIdentificadorUsuario();
+        idUsuarioRemetente = UsuarioFirebase.getIdentificadorUsuario();
 
         // recuperar dados do usuario
 
@@ -102,6 +112,11 @@ public class ChatActivity extends AppCompatActivity {
         recyclerMensagens.setHasFixedSize(true);
         recyclerMensagens.setAdapter(mensagensAdapter);
 
+        database = ConfiguracaoFirebase.getDatabaseReference();
+        mensagensRef = database.child("mensagens")
+                .child(idUsuarioRemetente)
+                .child(idUsuarioDestinatario);
+
 
 
     }
@@ -113,11 +128,11 @@ public class ChatActivity extends AppCompatActivity {
 
         if (!mensagem.isEmpty()){
             Mensagem msg = new Mensagem();
-            msg.setIdUsuario(idUsuario);
+            msg.setIdUsuario(idUsuarioRemetente);
             msg.setTexto(mensagem);
 
             //salvar mensagem
-            salvarMendsagem(idUsuario, idUsuarioDestinatario, msg);
+            salvarMendsagem(idUsuarioRemetente, idUsuarioDestinatario, msg);
 
 
         }else {
@@ -139,4 +154,51 @@ public class ChatActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recuperarMensagens();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mensagensRef.removeEventListener(childEventListenerMensagens);
+    }
+
+    private void recuperarMensagens(){
+
+     childEventListenerMensagens = mensagensRef.addChildEventListener(new ChildEventListener() {
+         @Override
+         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+             Mensagem mensagem = snapshot.getValue(Mensagem.class);
+             mensagens.add(mensagem);
+             mensagensAdapter.notifyDataSetChanged();
+         }
+
+         @Override
+         public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+         }
+
+         @Override
+         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+         }
+
+         @Override
+         public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+         }
+
+         @Override
+         public void onCancelled(@NonNull DatabaseError error) {
+
+         }
+     });
+
+
+    }
+
 }

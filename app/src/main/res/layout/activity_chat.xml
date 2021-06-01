@@ -18,7 +18,8 @@
         android:id="@+id/recyclerMensagens"
         layout="@layout/content_chat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="52dp"/>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
