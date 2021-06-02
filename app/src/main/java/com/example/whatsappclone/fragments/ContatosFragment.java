@@ -111,6 +111,9 @@ private FirebaseUser usuarioAtual;
     }
 
     public void recuperarContatos(){
+
+        //limpar contatos
+        //listaContatos.clear();
        valueEventListenerContatos = usuariosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

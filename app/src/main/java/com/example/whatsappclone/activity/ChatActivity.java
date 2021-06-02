@@ -117,22 +117,21 @@ public class ChatActivity extends AppCompatActivity {
                 .child(idUsuarioRemetente)
                 .child(idUsuarioDestinatario);
 
-
-
     }
 
     public  void enviarMensagem(View view){
         String mensagem = mensagemChat.getText().toString();
-
-
 
         if (!mensagem.isEmpty()){
             Mensagem msg = new Mensagem();
             msg.setIdUsuario(idUsuarioRemetente);
             msg.setTexto(mensagem);
 
-            //salvar mensagem
+            //salvar mensagem remetente
             salvarMendsagem(idUsuarioRemetente, idUsuarioDestinatario, msg);
+
+            //salvar mensagem destinatario
+            salvarMendsagem(idUsuarioDestinatario, idUsuarioRemetente , msg);
 
 
         }else {
