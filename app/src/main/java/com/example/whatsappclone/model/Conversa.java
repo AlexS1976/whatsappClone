@@ -18,6 +18,7 @@ public class Conversa {
         DatabaseReference conversaRef = database.child("conversas");
         conversaRef.child(this.getIdRemetente())
                 .child(this.getIdDestinatario())
+                .child(this.getUltimaMensagem())
                 .setValue(this);
 
     }
