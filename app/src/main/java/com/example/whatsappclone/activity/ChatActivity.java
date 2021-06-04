@@ -247,6 +247,7 @@ public class ChatActivity extends AppCompatActivity {
         Conversa conversaRemetente = new Conversa();
         conversaRemetente.setIdRemetente(idUsuarioRemetente);
         conversaRemetente.setIdDestinatario(idUsuarioDestinatario);
+        conversaRemetente.setUltimaMensagem(msg.getTexto());
         conversaRemetente.setUsuarioExibido(usuarioDestinatario);
 
         conversaRemetente.salvar();

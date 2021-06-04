@@ -64,7 +64,8 @@ public class AdapterConversas  extends RecyclerView.Adapter<AdapterConversas.MyV
     public  class MyViewHolder extends RecyclerView.ViewHolder{
 
         CircleImageView foto;
-        TextView nome, ultimaMensagem;
+        TextView nome;
+        TextView ultimaMensagem;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

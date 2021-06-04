@@ -46,6 +46,7 @@ public class AdapterContatos  extends RecyclerView.Adapter<AdapterContatos.MyVie
         holder.nome.setText(usuario.getNome());
         holder.email.setText(usuario.getEmail());
 
+
         if (usuario.getFoto() != null){
             Uri uri = Uri.parse(usuario.getFoto());
             Glide.with(context).load(uri).into(holder.foto);

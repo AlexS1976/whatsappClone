@@ -1,5 +1,6 @@
 package com.example.whatsappclone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.example.whatsappclone.R;
+import com.example.whatsappclone.activity.ChatActivity;
 import com.example.whatsappclone.adapter.AdapterConversas;
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
+import com.example.whatsappclone.helper.RecyclerItemClickListener;
 import com.example.whatsappclone.helper.UsuarioFirebase;
 import com.example.whatsappclone.model.Conversa;
 import com.example.whatsappclone.model.Usuario;
@@ -70,10 +74,38 @@ public class ConversaFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
+        //configurar evento de click
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                getActivity(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Conversa conversaSelecionada = listaConversas.get(position);
+
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("contato", conversaSelecionada.getUsuarioExibido() );
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        }
+        ));
+
+
         //configura conversasref
         String identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
         databaseReference = ConfiguracaoFirebase.getDatabaseReference();
-        conversasRef = databaseReference.child("conversas").child(identificadorUsuario);
+        conversasRef = databaseReference.child("conversas")
+                .child(identificadorUsuario);
     return view;
     }
 
