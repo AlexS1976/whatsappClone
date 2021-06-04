@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +121,13 @@ public class ConversaFragment extends Fragment {
     public void onStop() {
         super.onStop();
         conversasRef.removeEventListener(childEventListenerConversas);
+    }
+
+    public void pesquisarConversas(String texto){
+        Log.d("evento", texto);
+
+
+
     }
 
     public void recuperarConversas(){
