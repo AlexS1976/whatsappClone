@@ -124,10 +124,28 @@ public class ConversaFragment extends Fragment {
     }
 
     public void pesquisarConversas(String texto){
-        Log.d("evento", texto);
+
+    List<Conversa> listaConversaBusca = new ArrayList<>();
+    for (Conversa conversa : listaConversas){
+        String nome = conversa.getUsuarioExibido().getNome().toLowerCase();
+        String ultimaMensagem = conversa.getUltimaMensagem().toLowerCase();
+
+        if (nome.contains(texto ) || ultimaMensagem.contains(texto)){
+        listaConversaBusca.add(conversa);
+
+        }
+    }
+    adapter = new AdapterConversas(listaConversaBusca, getActivity());
+    recyclerView.setAdapter(adapter);
+    adapter.notifyDataSetChanged();
 
 
+    }
 
+    public void recarregarConversas(){
+        adapter = new AdapterConversas(listaConversas, getActivity());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     public void recuperarConversas(){
