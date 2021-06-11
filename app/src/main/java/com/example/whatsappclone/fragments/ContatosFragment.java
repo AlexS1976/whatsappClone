@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 
 import com.example.whatsappclone.R;
 import com.example.whatsappclone.activity.ChatActivity;
+import com.example.whatsappclone.activity.GrupoActivity;
 import com.example.whatsappclone.adapter.AdapterContatos;
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
 import com.example.whatsappclone.helper.RecyclerItemClickListener;
@@ -79,9 +80,21 @@ private FirebaseUser usuarioAtual;
                     @Override
                     public void onItemClick(View view, int position) {
                         Usuario usuarioSelecionado = listaContatos.get(position);
-                        Intent intent = new Intent(getActivity(), ChatActivity.class);
-                        intent.putExtra("contato", usuarioSelecionado );
-                        startActivity(intent);
+                        boolean cabecalho = usuarioSelecionado.getEmail().isEmpty();
+
+                        if (cabecalho){
+                            Intent intent = new Intent(getActivity(), GrupoActivity.class);
+                            startActivity(intent);
+
+
+                        } else {
+
+                            Intent intent = new Intent(getActivity(), ChatActivity.class);
+                            intent.putExtra("contato", usuarioSelecionado );
+                            startActivity(intent);
+                        }
+
+
                     }
 
                     @Override
@@ -95,26 +108,38 @@ private FirebaseUser usuarioAtual;
                     }
                 }));
 
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+
         recuperarContatos();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        //limpar contatos
+        listaContatos.clear();
         usuariosRef.removeEventListener(valueEventListenerContatos);
     }
 
     public void recuperarContatos(){
 
-        //limpar contatos
-        //listaContatos.clear();
-       valueEventListenerContatos = usuariosRef.addValueEventListener(new ValueEventListener() {
+        Usuario itemGrupo = new Usuario();
+        itemGrupo.setNome("Novo Grupo");
+        itemGrupo.setEmail("");
+
+        listaContatos.add(itemGrupo);
+
+
+
+        valueEventListenerContatos = usuariosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -125,6 +150,7 @@ private FirebaseUser usuarioAtual;
 
                     if (!emailUsuarioAtual.equals(usuario.getEmail())){
                         listaContatos.add(usuario);
+
                     }
 
                 }

@@ -17,10 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsAppClone">
         <activity
+            android:name=".activity.GrupoActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:label="Grupos"
+            android:theme="@style/Theme.WhatsAppClone.NoActionBar"></activity>
+        <activity
             android:name=".activity.ChatActivity"
             android:parentActivityName=".activity.MainActivity"
             android:label="@string/title_activity_chat"
-            android:theme="@style/Theme.WhatsAppClone.NoActionBar"></activity>
+
+            android:theme="@style/Theme.WhatsAppClone.NoActionBar" />
         <activity
             android:name=".activity.ConfiguracoesActivity"
             android:parentActivityName=".activity.MainActivity" />
