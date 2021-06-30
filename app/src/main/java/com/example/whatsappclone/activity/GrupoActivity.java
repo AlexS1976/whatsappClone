@@ -3,7 +3,9 @@ package com.example.whatsappclone.activity;
 import android.os.Bundle;
 
 import com.example.whatsappclone.adapter.AdapterContatos;
+import com.example.whatsappclone.adapter.GrupoSelecionadoAdapter;
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
+import com.example.whatsappclone.helper.RecyclerItemClickListener;
 import com.example.whatsappclone.helper.UsuarioFirebase;
 import com.example.whatsappclone.model.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.example.whatsappclone.R;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,13 +29,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GrupoActivity extends AppCompatActivity {
 
-    private RecyclerView membrosSelecionados, membros;
+    private RecyclerView membrosSelecionados, recyclerMembros;
     private AdapterContatos adapterContatos;
+    private GrupoSelecionadoAdapter grupoSelecionadoAdapter;
     private ArrayList <Usuario> listaMembros = new ArrayList<>();
+    private ArrayList <Usuario> listaMembrosSelecionados = new ArrayList<>();
     private ValueEventListener valueEventListenerMembros;
     private FirebaseUser usuarioAtual;
 
@@ -54,7 +58,7 @@ public class GrupoActivity extends AppCompatActivity {
 
         //configuracao inicial
 
-        membros = findViewById(R.id.membros);
+        recyclerMembros = findViewById(R.id.membros);
         membrosSelecionados = findViewById(R.id.membrosSelecionados);
 
         usuariosRef = ConfiguracaoFirebase.getDatabaseReference().child("usuarios");
@@ -66,10 +70,38 @@ public class GrupoActivity extends AppCompatActivity {
 
         // configuracao recycler view
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        membros.setAdapter(adapterContatos);
-        membros.setLayoutManager(layoutManager);
+        recyclerMembros.setAdapter(adapterContatos);
+        recyclerMembros.setLayoutManager(layoutManager);
 
-        membros.setHasFixedSize(true);
+        recyclerMembros.setHasFixedSize(true);
+
+        recyclerMembros.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerMembros, new
+                RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Usuario usuarioSelecionado = listaMembros.get(position);
+
+                        //remover usuarioSelecionado da lista
+                        listaMembros.remove(usuarioSelecionado);
+                        adapterContatos.notifyDataSetChanged();
+
+                        //adicionar usuario selecionado ao grupo
+                        listaMembrosSelecionados.add(usuarioSelecionado);
+
+
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    }
+                }));
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -81,6 +113,16 @@ public class GrupoActivity extends AppCompatActivity {
 
             }
         });
+
+        //configuracao adapter grupo selecionado
+
+        grupoSelecionadoAdapter = new GrupoSelecionadoAdapter(listaMembrosSelecionados, getApplicationContext());
+
+        // configuracao recycler view
+        RecyclerView.LayoutManager layoutManagerHorizontal = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        membrosSelecionados.setLayoutManager(layoutManagerHorizontal);
+        recyclerMembros.setHasFixedSize(true);
+        recyclerMembros.setAdapter(grupoSelecionadoAdapter);
     }
 
     public void recuperarContatos(){
