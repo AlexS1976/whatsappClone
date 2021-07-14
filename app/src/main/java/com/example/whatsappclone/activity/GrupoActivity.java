@@ -70,12 +70,15 @@ public class GrupoActivity extends AppCompatActivity {
 
         // configuracao recycler view
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerMembros.setAdapter(adapterContatos);
+
         recyclerMembros.setLayoutManager(layoutManager);
-
         recyclerMembros.setHasFixedSize(true);
+        recyclerMembros.setAdapter(adapterContatos);
 
-        recyclerMembros.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerMembros, new
+        recyclerMembros.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        getApplicationContext(),
+                        recyclerMembros, new
                 RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
@@ -87,7 +90,7 @@ public class GrupoActivity extends AppCompatActivity {
 
                         //adicionar usuario selecionado ao grupo
                         listaMembrosSelecionados.add(usuarioSelecionado);
-
+                        grupoSelecionadoAdapter.notifyDataSetChanged();
 
 
                     }
@@ -121,8 +124,33 @@ public class GrupoActivity extends AppCompatActivity {
         // configuracao recycler view
         RecyclerView.LayoutManager layoutManagerHorizontal = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         membrosSelecionados.setLayoutManager(layoutManagerHorizontal);
-        recyclerMembros.setHasFixedSize(true);
-        recyclerMembros.setAdapter(grupoSelecionadoAdapter);
+        membrosSelecionados.setHasFixedSize(true);
+        membrosSelecionados.setAdapter(grupoSelecionadoAdapter);
+
+        membrosSelecionados.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), membrosSelecionados, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Usuario usuarioSelecionado = listaMembrosSelecionados.get(position);
+                //remover listagem de membros selecionados
+                listaMembrosSelecionados.remove(usuarioSelecionado);
+                grupoSelecionadoAdapter.notifyDataSetChanged();
+
+                // Adicionar a listagem de membros
+                listaMembros.add(usuarioSelecionado);
+                adapterContatos.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        }));
+
     }
 
     public void recuperarContatos(){
