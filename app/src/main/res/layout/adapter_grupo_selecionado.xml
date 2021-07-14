@@ -4,13 +4,15 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="6dp">
+    android:padding="6dp"
+    android:scrollbars="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="4dp">
+        android:padding="4dp"
+        android:scrollbars="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotoContatoGrupoSelecionado"
@@ -24,10 +26,11 @@
 
         <TextView
             android:id="@+id/textNomeContatoGrupoSelecionado"
-            android:layout_width="match_parent"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:text="Nome do contato"
-            android:textSize="14dp"
+            android:textAlignment="center"
+            android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -39,7 +39,7 @@ public class GrupoActivity extends AppCompatActivity {
     private ArrayList <Usuario> listaMembrosSelecionados = new ArrayList<>();
     private ValueEventListener valueEventListenerMembros;
     private FirebaseUser usuarioAtual;
-
+    private  Toolbar toolbar;
 
     //referencias
     DatabaseReference usuariosRef;
@@ -48,7 +48,8 @@ public class GrupoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grupo);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Novo grupo");
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -91,6 +92,7 @@ public class GrupoActivity extends AppCompatActivity {
                         //adicionar usuario selecionado ao grupo
                         listaMembrosSelecionados.add(usuarioSelecionado);
                         grupoSelecionadoAdapter.notifyDataSetChanged();
+                        atualizarMembrosToolbar();
 
 
                     }
@@ -138,6 +140,7 @@ public class GrupoActivity extends AppCompatActivity {
                 // Adicionar a listagem de membros
                 listaMembros.add(usuarioSelecionado);
                 adapterContatos.notifyDataSetChanged();
+                atualizarMembrosToolbar();
             }
 
             @Override
@@ -170,6 +173,7 @@ public class GrupoActivity extends AppCompatActivity {
                 }
 
              adapterContatos.notifyDataSetChanged();
+            atualizarMembrosToolbar();
             }
 
             @Override
@@ -180,12 +184,20 @@ public class GrupoActivity extends AppCompatActivity {
 
     }
 
+    public void atualizarMembrosToolbar(){
+        int totalSelecionados = listaMembrosSelecionados.size();
+        int total = listaMembros.size() + listaMembrosSelecionados.size();
+        toolbar.setSubtitle(totalSelecionados + " de  " + total + " selecionados");
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
 
 
         recuperarContatos();
+
 
     }
 
