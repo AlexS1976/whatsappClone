@@ -1,5 +1,6 @@
 package com.example.whatsappclone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.whatsappclone.adapter.AdapterContatos;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class GrupoActivity extends AppCompatActivity {
@@ -109,12 +111,13 @@ public class GrupoActivity extends AppCompatActivity {
                 }));
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fabAvancarCadastro);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(GrupoActivity.this, CadastroGrupoActivity.class);
+                intent.putExtra("selecionados", (Serializable) listaMembrosSelecionados);
+                startActivity(intent);
 
             }
         });

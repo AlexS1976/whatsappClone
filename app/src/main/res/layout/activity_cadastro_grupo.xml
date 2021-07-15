@@ -2,9 +2,10 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/teste"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.GrupoActivity">
+    tools:context=".activity.CadastroGrupoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_grupo" />
+    <include layout="@layout/content_cadastro_grupo" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAvancarCadastro"
@@ -28,7 +29,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:contentDescription="enviar"
-        app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+        app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="TextView" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
