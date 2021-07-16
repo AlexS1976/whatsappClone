@@ -10,7 +10,6 @@ import com.example.whatsappclone.helper.RecyclerItemClickListener;
 import com.example.whatsappclone.helper.UsuarioFirebase;
 import com.example.whatsappclone.model.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -111,7 +110,7 @@ public class GrupoActivity extends AppCompatActivity {
                 }));
 
 
-        FloatingActionButton fab = findViewById(R.id.fabAvancarCadastro);
+        FloatingActionButton fab = findViewById(R.id.fabGrupoSalvar);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
