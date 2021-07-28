@@ -1,6 +1,7 @@
 package com.example.whatsappclone.model;
 
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
+import com.example.whatsappclone.helper.Base64Custom;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ public class Grupo implements Serializable {
     private String foto;
     private List<Usuario> membros;
 
+
     public Grupo() {
 
         DatabaseReference databaseReference = ConfiguracaoFirebase.getDatabaseReference();
@@ -19,6 +21,31 @@ public class Grupo implements Serializable {
 
         String idGrupoFirebase = grupoRef.push().getKey();
         setId(idGrupoFirebase);
+
+    }
+
+    public void salvar(){
+
+        DatabaseReference database = ConfiguracaoFirebase.getDatabaseReference();
+        DatabaseReference grupoRef = database.child("grupos");
+        grupoRef.child(getId()).setValue(this);
+
+        //salvar conversa para membros do grupo
+        for (Usuario membro : getMembros()){
+
+            String idRemetente = Base64Custom.codificarBase64(membro.getEmail());
+            String idDestinatario = getId();
+
+            Conversa conversa = new Conversa();
+
+            conversa.setIdRemetente(idRemetente);
+            conversa.setIdDestinatario(idDestinatario);
+            conversa.setUltimaMensagem("");
+            conversa.setIsGroup("true");
+            conversa.setGrupo(this);
+
+            conversa.salvar();
+        }
 
     }
 
@@ -53,4 +80,5 @@ public class Grupo implements Serializable {
     public void setMembros(List<Usuario> membros) {
         this.membros = membros;
     }
+
 }

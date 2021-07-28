@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.whatsappclone.adapter.GrupoSelecionadoAdapter;
 import com.example.whatsappclone.config.ConfiguracaoFirebase;
 import com.example.whatsappclone.helper.RecyclerItemClickListener;
+import com.example.whatsappclone.helper.UsuarioFirebase;
 import com.example.whatsappclone.model.Grupo;
 import com.example.whatsappclone.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +56,9 @@ public class CadastroGrupoActivity extends AppCompatActivity {
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
     private Grupo grupo;
+    private FloatingActionButton fabSalvarGrupo;
+
+
 
 
 
@@ -78,6 +83,7 @@ public class CadastroGrupoActivity extends AppCompatActivity {
         totalMembrosGrupo = findViewById(R.id.textTotalParticipantes);
         menbrosSelecionados = findViewById(R.id.recyclerMembrosGrupo);
         imagemGrupo = findViewById(R.id.imageGrupo);
+        fabSalvarGrupo= findViewById(R.id.fabGrupoSalvar);
         grupo = new Grupo();
 
         //evento de click da imagem do grupo
@@ -93,14 +99,7 @@ public class CadastroGrupoActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fabGrupoSalvar);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
         //recuperar lista de membros passada da grupo activity
         if (getIntent().getExtras() != null ){
@@ -120,6 +119,21 @@ public class CadastroGrupoActivity extends AppCompatActivity {
         menbrosSelecionados.setLayoutManager(layoutManagerHorizontal);
         menbrosSelecionados.setHasFixedSize(true);
         menbrosSelecionados.setAdapter(grupoSelecionadoAdapter);
+
+        fabSalvarGrupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nomeGrupo = textNomeGrupo.getText().toString();
+
+                //adicionar ao grupo o usuário que esta logado
+                listaMembrosSelecionados.add(UsuarioFirebase.getDadosUsuario());
+                grupo.setMembros(listaMembrosSelecionados);
+                grupo.setNome(nomeGrupo);
+                grupo.salvar();
+
+
+            }
+        });
 
 
 
