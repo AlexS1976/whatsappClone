@@ -131,6 +131,9 @@ public class CadastroGrupoActivity extends AppCompatActivity {
                 grupo.setNome(nomeGrupo);
                 grupo.salvar();
 
+                Intent intent = new Intent(CadastroGrupoActivity.this, ChatActivity.class);
+                intent.putExtra("chatGrupo", grupo);
+                startActivity(intent);
 
             }
         });

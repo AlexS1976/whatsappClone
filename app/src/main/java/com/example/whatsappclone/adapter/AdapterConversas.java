@@ -57,7 +57,12 @@ public class AdapterConversas  extends RecyclerView.Adapter<AdapterConversas.MyV
 
         } else{
                 Usuario usuario = conversa.getUsuarioExibido();
+
+            if (usuario != null){
+
                 holder.nome.setText(usuario.getNome());
+
+
 
                 if (usuario.getFoto() != null){
 
@@ -68,6 +73,9 @@ public class AdapterConversas  extends RecyclerView.Adapter<AdapterConversas.MyV
                 }else {
                     holder.foto.setImageResource(R.drawable.padrao);
                 }
+
+            }
+
             }
 
 
