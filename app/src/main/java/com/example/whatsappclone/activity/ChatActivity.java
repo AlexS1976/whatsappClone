@@ -258,8 +258,11 @@ public class ChatActivity extends AppCompatActivity {
                 //salvar mensagem destinatario
                 salvarMendsagem(idUsuarioDestinatario, idUsuarioRemetente , msg);
 
-                // salvar conversa no fragment conversas
-                salvarConveras(msg, false);
+                // salvar conversa remetente no fragment conversas
+                salvarConveras(idUsuarioRemetente, idUsuarioDestinatario, usuarioDestinatario, msg, false);
+                // salvar conversa destinatario
+                Usuario usuarioRemetente = UsuarioFirebase.getDadosUsuario();
+                salvarConveras( idUsuarioDestinatario, idUsuarioRemetente, usuarioRemetente, msg, false);
 
 
             }else{
@@ -275,9 +278,7 @@ public class ChatActivity extends AppCompatActivity {
                     salvarMendsagem(idRemetenteGrupo, idUsuarioDestinatario, msg);
 
                     // salvar conversa no fragment conversas
-                    salvarConveras(msg, true);
-
-
+                    salvarConveras(idRemetenteGrupo, idUsuarioDestinatario, usuarioDestinatario, msg, true);
                 }
 
             }
@@ -286,11 +287,11 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    private void salvarConveras(Mensagem msg, boolean isGroup ){
+    private void salvarConveras(String idRemetente, String idDestinatario, Usuario usuarioExibicao,  Mensagem msg, boolean isGroup ){
 
         Conversa conversaRemetente = new Conversa();
-        conversaRemetente.setIdRemetente(idUsuarioRemetente);
-        conversaRemetente.setIdDestinatario(idUsuarioDestinatario);
+        conversaRemetente.setIdRemetente(idRemetente);
+        conversaRemetente.setIdDestinatario(idDestinatario);
         conversaRemetente.setUltimaMensagem(msg.getTexto());
 
         if (isGroup){
@@ -300,7 +301,7 @@ public class ChatActivity extends AppCompatActivity {
 
         }else{//conversa normal
 
-            conversaRemetente.setUsuarioExibido(usuarioDestinatario);
+            conversaRemetente.setUsuarioExibido(usuarioExibicao);
             conversaRemetente.setIsGroup("false");
 
         }
