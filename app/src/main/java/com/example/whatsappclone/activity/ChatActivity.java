@@ -62,6 +62,7 @@ public class ChatActivity extends AppCompatActivity {
     private List<Mensagem> mensagens = new ArrayList<>();
     private ChildEventListener childEventListenerMensagens;
     private Grupo grupo;
+    private Usuario usuarioRemetente;
 
     //firebese reference
     private  DatabaseReference database;
@@ -96,6 +97,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //recuperar dados do usuario remetente
         idUsuarioRemetente = UsuarioFirebase.getIdentificadorUsuario();
+        usuarioRemetente = UsuarioFirebase.getDadosUsuario();
 
         // recuperar dados do usuario
 
@@ -261,7 +263,7 @@ public class ChatActivity extends AppCompatActivity {
                 // salvar conversa remetente no fragment conversas
                 salvarConveras(idUsuarioRemetente, idUsuarioDestinatario, usuarioDestinatario, msg, false);
                 // salvar conversa destinatario
-                Usuario usuarioRemetente = UsuarioFirebase.getDadosUsuario();
+
                 salvarConveras( idUsuarioDestinatario, idUsuarioRemetente, usuarioRemetente, msg, false);
 
 
@@ -273,6 +275,7 @@ public class ChatActivity extends AppCompatActivity {
                     Mensagem msg = new Mensagem();
                     msg.setIdUsuario(idUsuarioLogadoGrupo);
                     msg.setTexto(mensagem);
+                    msg.setNome(usuarioRemetente.getNome());
 
                     //salvar mensagem para o membro
                     salvarMendsagem(idRemetenteGrupo, idUsuarioDestinatario, msg);
