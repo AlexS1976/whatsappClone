@@ -64,6 +64,7 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
             Glide.with(contex).load(url).into(holder.imagem);
 
             String nome = mensagem.getNome();
+
             if (!nome.isEmpty()){
                 holder.nome.setText(nome);
 
@@ -72,6 +73,7 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
             }
             holder.mensagem.setVisibility(View.GONE);
         }else{
+            holder.mensagem.setText( msg );
 
             String nome = mensagem.getNome();
             if (!nome.isEmpty()){
@@ -81,7 +83,7 @@ public class MensagensAdapter extends RecyclerView.Adapter<MensagensAdapter.MyVi
                 holder.nome.setVisibility(View.GONE);
             }
 
-            holder.mensagem.setText(msg);
+
             holder.imagem.setVisibility(View.GONE);
 
 

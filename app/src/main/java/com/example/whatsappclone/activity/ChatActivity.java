@@ -261,10 +261,10 @@ public class ChatActivity extends AppCompatActivity {
                 salvarMendsagem(idUsuarioDestinatario, idUsuarioRemetente , msg);
 
                 // salvar conversa remetente no fragment conversas
-                salvarConveras(idUsuarioRemetente, idUsuarioDestinatario, usuarioDestinatario, msg, false);
+                salvarConveras(idUsuarioRemetente, idUsuarioDestinatario, usuarioRemetente, msg, false);
                 // salvar conversa destinatario
 
-                salvarConveras( idUsuarioDestinatario, idUsuarioRemetente, usuarioRemetente, msg, false);
+                salvarConveras( idUsuarioDestinatario, idUsuarioRemetente, usuarioDestinatario, msg, false);
 
 
             }else{

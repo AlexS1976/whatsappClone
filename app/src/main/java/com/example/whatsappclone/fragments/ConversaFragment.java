@@ -137,15 +137,27 @@ public class ConversaFragment extends Fragment {
     public void pesquisarConversas(String texto){
 
     List<Conversa> listaConversaBusca = new ArrayList<>();
-    for (Conversa conversa : listaConversas){
-        String nome = conversa.getUsuarioExibido().getNome().toLowerCase();
-        String ultimaMensagem = conversa.getUltimaMensagem().toLowerCase();
 
-        if (nome.contains(texto ) || ultimaMensagem.contains(texto)){
-        listaConversaBusca.add(conversa);
+        for ( Conversa conversa : listaConversas ){
+
+            if( conversa.getUsuarioExibido() != null ){
+                String nome = conversa.getUsuarioExibido().getNome().toLowerCase();
+                String ultimaMsg = conversa.getUltimaMensagem().toLowerCase();
+
+                if( nome.contains( texto ) || ultimaMsg.contains( texto ) ){
+                    listaConversaBusca.add( conversa );
+                }
+            }else {
+                String nome = conversa.getGrupo().getNome().toLowerCase();
+                String ultimaMsg = conversa.getUltimaMensagem().toLowerCase();
+
+                if( nome.contains( texto ) || ultimaMsg.contains( texto ) ){
+                    listaConversaBusca.add( conversa );
+                }
+            }
+
 
         }
-    }
     adapter = new AdapterConversas(listaConversaBusca, getActivity());
     recyclerView.setAdapter(adapter);
     adapter.notifyDataSetChanged();

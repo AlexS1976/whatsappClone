@@ -17,6 +17,7 @@ public class Usuario implements Serializable {
     private  String foto;
 
     public Usuario() {
+
     }
 
     public void salvar(){

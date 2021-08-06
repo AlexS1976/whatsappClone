@@ -8,10 +8,12 @@ public class Mensagem {
     private String nome;
 
     public Mensagem() {
+
         this.setNome("");
     }
 
     public String getTexto() {
+
         return texto;
     }
 
