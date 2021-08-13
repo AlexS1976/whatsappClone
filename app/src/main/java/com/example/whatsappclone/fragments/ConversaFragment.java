@@ -81,7 +81,8 @@ public class ConversaFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
 
-                Conversa conversaSelecionada = listaConversas.get(position);
+                List<Conversa> listaConversasAtualizada = adapter.getConversas();
+                Conversa conversaSelecionada = listaConversasAtualizada.get(position);
 
                 if(conversaSelecionada.getIsGroup().equals("true")){
 
